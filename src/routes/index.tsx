@@ -1,13 +1,25 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Feather';
+
+import {
+  HeaderContainer,
+  HeaderTitle,
+  NewPostButtonText,
+  HeaderTop,
+  NewPostButton,
+  NavButtonsContainer,
+  NavButton,
+  NavButtonText,
+} from './styles';
 
 import SignIn from '../pages/SignIn';
 import Dashboard from '../pages/Dashboard';
 
 const Auth = createStackNavigator();
+const Stack = createStackNavigator();
 const App = createBottomTabNavigator();
 
 interface IconWithBadgeProps {
@@ -21,7 +33,7 @@ function IconWithBadge({ badgeCount, color, size }: IconWithBadgeProps) {
     <View
       style={{
         position: 'absolute',
-        bottom: 5, // space from bottombar
+        bottom: 5,
         height: 60,
         width: 60,
         borderRadius: 60,
@@ -64,6 +76,91 @@ function IconWithBadge({ badgeCount, color, size }: IconWithBadgeProps) {
   );
 }
 
+const DashboardRoutes: React.FC = () => {
+  const [activeNavButton, setActiveNavButton] = React.useState('0');
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        header: () => (
+          <HeaderContainer>
+            <HeaderTop>
+              <HeaderTitle>Riderize</HeaderTitle>
+              <View style={{ flexDirection: 'row' }}>
+                <Icon
+                  name="search"
+                  size={25}
+                  color="#8f5de8"
+                  style={{ marginRight: 15 }}
+                />
+                <Icon
+                  name="send"
+                  size={25}
+                  color="#8f5de8"
+                  style={{ marginRight: 15 }}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: 3,
+                    top: -6,
+                    backgroundColor: 'red',
+                    borderRadius: 10,
+                    width: 20,
+                    height: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text
+                    style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}
+                  >
+                    1
+                  </Text>
+                </View>
+              </View>
+            </HeaderTop>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <NavButtonsContainer>
+                <NavButton
+                  isActive={activeNavButton === '0'}
+                  onPress={() => setActiveNavButton('0')}
+                >
+                  <NavButtonText isActive={activeNavButton === '0'}>
+                    Seguindo
+                  </NavButtonText>
+                </NavButton>
+                <NavButton
+                  isActive={activeNavButton === '1'}
+                  onPress={() => setActiveNavButton('1')}
+                >
+                  <NavButtonText isActive={activeNavButton === '1'}>
+                    Clubes
+                  </NavButtonText>
+                </NavButton>
+                <NavButton
+                  isActive={activeNavButton === '2'}
+                  onPress={() => setActiveNavButton('2')}
+                >
+                  <NavButtonText isActive={activeNavButton === '2'}>
+                    Marcas
+                  </NavButtonText>
+                </NavButton>
+              </NavButtonsContainer>
+              <NewPostButton>
+                <NewPostButtonText>Criar nova publicação</NewPostButtonText>
+                <Icon name="plus-circle" color="#fff" size={20} />
+              </NewPostButton>
+            </View>
+          </HeaderContainer>
+        ),
+      }}
+    >
+      <Stack.Screen name="DashboardStackScreen" component={Dashboard} />
+    </Stack.Navigator>
+  );
+};
+
 const AppRoutes: React.FC = () => (
   <App.Navigator
     tabBarOptions={{
@@ -78,7 +175,7 @@ const AppRoutes: React.FC = () => (
   >
     <App.Screen
       name="Dashboard"
-      component={Dashboard}
+      component={DashboardRoutes}
       options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View
@@ -94,7 +191,7 @@ const AppRoutes: React.FC = () => (
     />
     <App.Screen
       name="Profile"
-      component={Dashboard}
+      component={DashboardRoutes}
       options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View
@@ -110,7 +207,7 @@ const AppRoutes: React.FC = () => (
     />
     <App.Screen
       name="Home"
-      component={Dashboard}
+      component={DashboardRoutes}
       options={{
         tabBarIcon: ({ color, size }) => (
           <IconWithBadge color={color} size={size} badgeCount={1} />
@@ -119,7 +216,7 @@ const AppRoutes: React.FC = () => (
     />
     <App.Screen
       name="Search"
-      component={Dashboard}
+      component={DashboardRoutes}
       options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View
@@ -135,7 +232,7 @@ const AppRoutes: React.FC = () => (
     />
     <App.Screen
       name="Notifications"
-      component={Dashboard}
+      component={DashboardRoutes}
       options={{
         tabBarIcon: ({ color, size, focused }) => (
           <View
