@@ -28,7 +28,7 @@ interface IconWithBadgeProps {
   size: number;
 }
 
-function IconWithBadge({ badgeCount, color, size }: IconWithBadgeProps) {
+function IconWithBadge({ badgeCount }: IconWithBadgeProps) {
   return (
     <View
       style={{

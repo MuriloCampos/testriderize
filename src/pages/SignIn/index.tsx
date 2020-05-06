@@ -27,10 +27,10 @@ const SignIn: React.FC = () => {
       </StravaButton>
       <View
         style={{
-          shadowColor: 'rgba(0,0,0, .4)', // IOS
-          shadowOffset: { height: 1, width: 1 }, // IOS
-          shadowOpacity: 1, // IOS
-          shadowRadius: 1, // IOS
+          shadowColor: 'rgba(0,0,0, .4)',
+          shadowOffset: { height: 1, width: 1 },
+          shadowOpacity: 1,
+          shadowRadius: 1,
           backgroundColor: '#fff',
           borderRadius: 40,
           elevation: 2,
